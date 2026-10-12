@@ -1,0 +1,36 @@
+{
+  "name": "vercel-s3-tables-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "db:setup": "tsx lib/db/setup.ts",
+    "db:migrate": "tsx lib/db/migrate.ts",
+    "db:seed": "tsx lib/db/seed.ts",
+    "db:append": "tsx lib/db/append.ts",
+    "db:check": "tsx lib/db/check.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3tables": "3.1142.0",
+    "@duckdb/node-api": "1.4.1-r.1",
+    "@vercel/oidc-aws-credentials-provider": "3.3.9",
+    "lucide-react": "0.468.0",
+    "next": "16.3.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.1",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1",
+    "autoprefixer": "10.4.20",
+    "dotenv": "16.6.1",
+    "postcss": "8.5.28",
+    "prettier": "3.7.4",
+    "tailwindcss": "3.4.16",
+    "tsx": "4.20.6",
+    "typescript": "5.7.2"
+  }
+}
