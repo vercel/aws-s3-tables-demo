@@ -27,6 +27,11 @@ table bucket and loads the catalog data, so there is nothing to run by hand.
 vercel env pull
 ```
 
+`vercel env pull` reads the project's **Development** environment. The Deploy button connects
+the table bucket to every environment, but connecting it from the dashboard leaves Development
+unchecked by default. If `.env.local` has no `AWS_*` variables, open the S3 Tables resource in
+the Vercel dashboard, edit the project connection, enable Development, and pull again.
+
 2. Install dependencies:
 
 ```bash
@@ -113,12 +118,15 @@ Components.
 Supplied by the Vercel AWS integration:
 
 ```text
-aws_s3_tables_AWS_ACCOUNT_ID
-aws_s3_tables_AWS_REGION
-aws_s3_tables_AWS_RESOURCE_ARN
-aws_s3_tables_AWS_ROLE_ARN
-aws_s3_tables_S3_TABLE_BUCKET_NAME
+AWS_ACCOUNT_ID
+AWS_REGION
+AWS_RESOURCE_ARN
+AWS_ROLE_ARN
+S3_TABLE_BUCKET_NAME
 ```
+
+If you connected the table bucket with the `aws_s3_tables_` prefix, the prefixed names
+(`aws_s3_tables_AWS_ROLE_ARN` and so on) are read first.
 
 Identifies the catalog table:
 
@@ -173,7 +181,7 @@ to do by hand:
 
 ```bash
 aws s3tables delete-table \
-  --table-bucket-arn "$aws_s3_tables_AWS_RESOURCE_ARN" \
+  --table-bucket-arn "$AWS_RESOURCE_ARN" \
   --namespace catalog --name movie_catalog_snapshots
 npm run db:setup
 ```
@@ -202,7 +210,7 @@ lib/db/catalog-mutations.ts      Shared seed/append/reset logic
 lib/db/snapshot-io.ts            Row writing and next-snapshot derivation
 lib/db/actions.ts                Server actions behind the page controls
 lib/db/seed-data.ts              Baseline snapshot definitions
-lib/db/env.ts                    Loads local .env files for the CLI scripts
+lib/db/env.ts                    Loads local .env files (including vercel pull output) for the CLI scripts
 lib/db/check.ts                  Reports table bucket and table state
 .env.example                     Variable names only—no secrets
 ```

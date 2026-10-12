@@ -1,6 +1,6 @@
 import { DuckDBInstance, type DuckDBConnection } from "@duckdb/node-api";
 import { awsCredentialsProvider } from "@vercel/oidc-aws-credentials-provider";
-import { getS3TablesConfiguration, resolveS3TablesTarget } from "@/lib/s3-tables-config";
+import { getS3TablesConfiguration, MISSING_CONFIGURATION_HINT, resolveS3TablesTarget } from "@/lib/s3-tables-config";
 
 let connectionPromise: Promise<DuckDBConnection> | undefined;
 
@@ -17,9 +17,7 @@ async function openConnection(): Promise<DuckDBConnection> {
   const configuration = getS3TablesConfiguration();
 
   if (!configuration) {
-    throw new Error(
-      "S3 Tables configuration is incomplete. Run `vercel pull --environment=development` first.",
-    );
+    throw new Error(`S3 Tables configuration is incomplete. ${MISSING_CONFIGURATION_HINT}`);
   }
 
   const credentials = await awsCredentialsProvider({

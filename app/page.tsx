@@ -48,7 +48,7 @@ export default async function HomePage() {
         tableState={{ records: 0, totalRows: 0, snapshotCount: 0, latestSnapshot: "unavailable", previousSnapshot: "unavailable" }}
         namespace={namespace}
         tableName={tableName}
-        notice="Set the aws_s3_tables_* environment variables to connect this demo to S3 Tables."
+        notice="Connect the Amazon S3 Tables resource to this project to load the catalog."
       />
     );
   }

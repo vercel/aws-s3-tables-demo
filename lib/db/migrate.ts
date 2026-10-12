@@ -1,6 +1,6 @@
 import "./env";
 import { ensureCatalogTable } from "@/lib/catalog-table-setup";
-import { getS3TablesStatus } from "@/lib/s3-tables-config";
+import { getS3TablesStatus, MISSING_CONFIGURATION_HINT } from "@/lib/s3-tables-config";
 
 async function migrate() {
   const status = getS3TablesStatus();
@@ -8,7 +8,7 @@ async function migrate() {
   if (!status.configured) {
     throw new Error(
       `Missing required environment variables: ${status.missingEnvironmentVariables.join(", ")}. ` +
-        `Run \`vercel pull --environment=development\` first.`,
+        MISSING_CONFIGURATION_HINT,
     );
   }
 

@@ -1,6 +1,6 @@
 import "./env";
 import { getS3TablesMetadataSummary } from "@/lib/s3-tables-metadata";
-import { getS3TablesStatus } from "@/lib/s3-tables-config";
+import { getS3TablesStatus, MISSING_CONFIGURATION_HINT } from "@/lib/s3-tables-config";
 
 async function check() {
   const status = getS3TablesStatus();
@@ -8,7 +8,7 @@ async function check() {
   if (!status.configured) {
     throw new Error(
       `Missing required environment variables: ${status.missingEnvironmentVariables.join(", ")}. ` +
-        `Run \`vercel pull --environment=development\` first.`,
+        MISSING_CONFIGURATION_HINT,
     );
   }
 
