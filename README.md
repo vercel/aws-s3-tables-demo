@@ -4,7 +4,7 @@ This demo uses Amazon S3 Tables with Next.js to compare movie-catalog snapshots 
 
 ![Vercel with Amazon S3 Tables](/public/vercel-aws-s3-tables.svg)
 
-**Demo:** [View Demo](https://aws-s3-tables-demo.labs.vercel.dev/)
+**Demo:** [View Demo](https://aws-s3-tables.vercel.app/)
 
 **Getting Started:**
 
