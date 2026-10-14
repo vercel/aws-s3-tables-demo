@@ -137,7 +137,7 @@ S3_TABLES_TABLE_NAME=movie_catalog_snapshots
 
 `GET /api/status` reports whether the required variables are present, and the names of any
 that are missing. It never returns account IDs, role ARNs, resource ARNs, or bucket names.
-`GET /api/catalog` returns the same catalog data the page renders, uncached.
+`GET /api/catalog` returns the same catalog data the page renders, from the same 60-second cache.
 
 ## Deployment
 
@@ -192,7 +192,7 @@ npm run db:setup
 app/                             Next.js App Router entry points and global styles
 app/page.tsx                     Server component; reads the cached catalog snapshot
 app/api/status/route.ts          Configuration readiness endpoint
-app/api/catalog/route.ts         Catalog data as JSON, uncached
+app/api/catalog/route.ts         Catalog data as JSON, cached like the page
 components/catalog-insights.tsx  Single-page catalog snapshot experience
 lib/catalog.ts                   Shared types
 lib/s3-tables-config.ts          Server-only S3 Tables environment-variable contract
