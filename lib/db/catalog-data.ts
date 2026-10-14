@@ -46,7 +46,8 @@ const cacheVersion = process.env.VERCEL_DEPLOYMENT_ID ?? "local";
  * The cache exists to keep the ~5.6s cold path off most requests, but it also
  * delays newly appended snapshots from appearing. A minute keeps the cold-start
  * protection while making `npm run db:seed` visible on the page without a long
- * wait. `/api/catalog` is uncached if you need the table state immediately.
+ * wait. `/api/catalog` reads through this cache too; the page's append and
+ * reset controls expire it, so only command-line writes wait out the window.
  */
 export const getCatalogData = unstable_cache(loadCatalogData, ["catalog-snapshot", cacheVersion], {
   revalidate: 60,

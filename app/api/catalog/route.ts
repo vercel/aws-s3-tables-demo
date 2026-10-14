@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCatalogMetrics, getCatalogViews, getGenreMix, getTableState } from "@/lib/db/queries";
+import { getCatalogData } from "@/lib/db/catalog-data";
 import { getS3TablesStatus } from "@/lib/s3-tables-config";
 
 export const runtime = "nodejs";
@@ -16,12 +16,10 @@ export async function GET() {
   }
 
   try {
-    const [views, metrics, genreMix, tableState] = await Promise.all([
-      getCatalogViews(),
-      getCatalogMetrics(),
-      getGenreMix(),
-      getTableState(),
-    ]);
+    // Served from the same 60-second cache as the page. Uncached, every request
+    // paid the full DuckDB cold path (~5s), which let anyone run up function
+    // time and S3 Tables reads just by calling this endpoint in a loop.
+    const { views, metrics, genreMix, tableState } = await getCatalogData();
 
     return NextResponse.json({ source: "s3-tables", views, metrics, genreMix, tableState });
   } catch (error) {
